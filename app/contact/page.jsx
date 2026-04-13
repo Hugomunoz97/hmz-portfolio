@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { SiLinkedin, SiBehance, SiFiverr, SiInstagram, SiWhatsapp, SiDribbble } from "react-icons/si";
+import { FaLinkedin, FaBehance, FaInstagram, FaWhatsapp, FaDribbble } from "react-icons/fa";
+import { SiFiverr } from "react-icons/si";
 
 export default function Contact() {
   const [status, setStatus] = useState("idle");
@@ -68,12 +69,12 @@ export default function Contact() {
               <h3 className="text-white/80 font-bold mb-4 text-sm uppercase tracking-wider">Encuéntrame en</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {[
-                  { name: "LinkedIn", href: "http://www.linkedin.com/in/hugo-munoz-r97", icon: <SiLinkedin className="w-6 h-6 mb-3 text-current transition-colors" /> },
-                  { name: "Behance", href: "https://www.behance.net/hmzdis", icon: <SiBehance className="w-6 h-6 mb-3 text-current transition-colors" /> },
+                  { name: "LinkedIn", href: "http://www.linkedin.com/in/hugo-munoz-r97", icon: <FaLinkedin className="w-6 h-6 mb-3 text-current transition-colors" /> },
+                  { name: "Behance", href: "https://www.behance.net/hmzdis", icon: <FaBehance className="w-6 h-6 mb-3 text-current transition-colors" /> },
                   { name: "Fiverr", href: "https://es.fiverr.com/hugomz97", icon: <SiFiverr className="w-6 h-6 mb-3 text-current transition-colors" /> },
-                  { name: "Instagram", href: "https://instagram.com", icon: <SiInstagram className="w-6 h-6 mb-3 text-current transition-colors" /> },
-                  { name: "WhatsApp", href: "https://wa.me/543884600932", icon: <SiWhatsapp className="w-6 h-6 mb-3 text-current transition-colors" /> },
-                  { name: "Dribbble", href: "https://dribbble.com/hugomunoz97", icon: <SiDribbble className="w-6 h-6 mb-3 text-current transition-colors" /> }
+                  { name: "Instagram", href: "https://instagram.com", icon: <FaInstagram className="w-6 h-6 mb-3 text-current transition-colors" /> },
+                  { name: "WhatsApp", href: "https://wa.me/543884600932", icon: <FaWhatsapp className="w-6 h-6 mb-3 text-current transition-colors" /> },
+                  { name: "Dribbble", href: "https://dribbble.com/hugomunoz97", icon: <FaDribbble className="w-6 h-6 mb-3 text-current transition-colors" /> }
                 ].map((link, i) => (
                   <Link
                     key={i}
