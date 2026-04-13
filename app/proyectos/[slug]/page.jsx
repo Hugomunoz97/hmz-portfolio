@@ -1,6 +1,16 @@
 import Link from "next/link";
 import { client } from "../../../sanityClient";
 
+export async function generateStaticParams() {
+  const proyectos = await client.fetch(`*[_type == "proyecto" && defined(slug.current)] { "slug": slug.current }`);
+  
+  if (!proyectos || proyectos.length === 0) return [];
+  
+  return proyectos.map((proyecto) => ({
+    slug: proyecto.slug,
+  }));
+}
+
 export default async function ProyectoInterna({ params }) {
   const { slug } = await params;
 

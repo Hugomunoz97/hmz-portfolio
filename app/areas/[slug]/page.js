@@ -3,14 +3,17 @@ import { client } from "../../../sanityClient";
 import Navbar from "../../components/Navbar";
 
 export async function generateStaticParams() {
-  const areas = await client.fetch(`*[_type == "areaServicio"] { "slug": slug.current }`);
+  const areas = await client.fetch(`*[_type == "areaServicio" && defined(slug.current)] { "slug": slug.current }`);
+  
+  if (!areas || areas.length === 0) return [];
+  
   return areas.map((area) => ({
     slug: area.slug,
   }));
 }
 
 export default async function AreaPage({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   // Realizamos 2 consultas a Sanity: los detalles del Área y los proyectos relacionados a ella.
   const areaInfo = await client.fetch(`
