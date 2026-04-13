@@ -26,9 +26,14 @@ export default function Footer() {
           </div>
           <div className="flex flex-col gap-4">
             <h4 className="text-white font-semibold text-xs uppercase tracking-widest mb-1">Redes</h4>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-[#FFE500] transition-colors">LinkedIn</a>
-            <a href="https://behance.net" target="_blank" rel="noreferrer" className="hover:text-[#FFE500] transition-colors">Behance</a>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-[#FFE500] transition-colors">Instagram</a>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+              <a href="http://www.linkedin.com/in/hugo-munoz-r97" target="_blank" rel="noreferrer" className="hover:text-[#FFE500] transition-colors">LinkedIn</a>
+              <a href="https://www.behance.net/hmzdis" target="_blank" rel="noreferrer" className="hover:text-[#FFE500] transition-colors">Behance</a>
+              <a href="https://es.fiverr.com/hugomz97" target="_blank" rel="noreferrer" className="hover:text-[#FFE500] transition-colors">Fiverr</a>
+              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-[#FFE500] transition-colors">Instagram</a>
+              <a href="https://wa.me/543884600932" target="_blank" rel="noreferrer" className="hover:text-[#FFE500] transition-colors">WhatsApp</a>
+              <a href="https://dribbble.com/hugomunoz97" target="_blank" rel="noreferrer" className="hover:text-[#FFE500] transition-colors">Dribbble</a>
+            </div>
           </div>
         </nav>
       </div>
