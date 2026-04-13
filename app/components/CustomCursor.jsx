@@ -14,16 +14,25 @@ export default function CustomCursor() {
   const MAX_AGE = 40; // N° de frames que dura el trazo en pantalla (determina el fade out)
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      pointsRef.current.push({
-        x: e.clientX,
-        y: e.clientY,
-        age: 0,
-      });
+    const handleMove = (e) => {
+      const x = e.clientX ?? (e.touches && e.touches[0] ? e.touches[0].clientX : undefined);
+      const y = e.clientY ?? (e.touches && e.touches[0] ? e.touches[0].clientY : undefined);
+      
+      if (x !== undefined && y !== undefined) {
+        pointsRef.current.push({
+          x,
+          y,
+          age: 0,
+        });
+      }
     };
 
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMove, { passive: true });
+    window.addEventListener("touchmove", handleMove, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("touchmove", handleMove);
+    };
   }, []);
 
   useEffect(() => {

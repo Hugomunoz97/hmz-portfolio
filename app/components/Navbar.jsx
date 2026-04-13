@@ -8,8 +8,8 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed top-0 w-full z-50 py-4 px-6 md:px-12 flex justify-between items-center backdrop-blur-md bg-neutral-950/70 border-b border-white/5">
-        <Link href="/" className="font-bold text-xl tracking-tighter hover:text-[#FFE500] transition-colors">
+      <header className={`fixed top-0 w-full z-[60] py-4 px-6 md:px-12 flex justify-between items-center transition-colors duration-300 ${isOpen ? 'bg-transparent border-transparent' : 'backdrop-blur-md bg-neutral-950/70 border-b border-white/5'}`}>
+        <Link href="/" className="font-bold text-xl tracking-tighter hover:text-[#FFE500] transition-colors relative z-[60]">
           HMZ
         </Link>
 
