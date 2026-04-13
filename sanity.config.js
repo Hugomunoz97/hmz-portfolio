@@ -1,0 +1,187 @@
+import { defineConfig } from 'sanity';
+import { deskTool } from 'sanity/desk';
+import { cloudinarySchemaPlugin } from 'sanity-plugin-cloudinary';
+
+export default defineConfig({
+    name: 'default',
+    title: 'HMZ Portfolio Admin',
+    projectId: 'isev05v8',
+    dataset: 'production',
+    basePath: '/studio',
+    plugins: [
+        deskTool(),
+        cloudinarySchemaPlugin(),
+    ],
+    schema: {
+        types: [
+            {
+                name: 'portableTextExtendido',
+                title: 'Contenido Enriquecido',
+                type: 'array',
+                of: [
+                    {
+                        type: 'block',
+                        styles: [
+                            { title: 'Párrafo', value: 'normal' },
+                            { title: 'Título H2', value: 'h2' },
+                            { title: 'Subtítulo H3', value: 'h3' }
+                        ],
+                        lists: [
+                            { title: 'Lista normal', value: 'bullet' },
+                            { title: 'Lista numerada', value: 'number' }
+                        ],
+                        marks: {
+                            decorators: [
+                                { title: 'Negrita', value: 'strong' },
+                                { title: 'Cursiva', value: 'em' }
+                            ]
+                        }
+                    },
+                    { type: 'cloudinary.asset', title: 'Imagen Completa (Render)' },
+                    { type: 'gridImagenes' },
+                    { type: 'bloqueVideo' },
+                    { type: 'bloqueArchivo' },
+                    { type: 'bloqueLinks' }
+                ]
+            },
+            {
+                name: 'servicioProyecto',
+                title: 'Servicios (Nuevos)',
+                type: 'document',
+                fields: [
+                    { name: 'titulo', title: 'Título del Servicio', type: 'string' },
+                    { name: 'subtitulo', title: 'Subtítulo Corto', type: 'text' },
+                    { name: 'imagenMedia', title: 'Imagen/Video Principal (Cloudinary)', type: 'cloudinary.asset' },
+                    { name: 'recursoURL', title: 'URL de Prototipo Figma, Render 3D o Video Externo', type: 'url' },
+                    { name: 'documentoPdf', title: 'Archivo PDF (Descargable)', type: 'file' },
+                    {
+                        name: 'contenidoBody',
+                        title: 'Construcción del Caso de Estudio / Detalle',
+                        type: 'portableTextExtendido'
+                    }
+                ]
+            },
+            {
+                name: 'areaDeDiseno',
+                title: 'Áreas de Diseño (Home) V2',
+                type: 'document',
+                fields: [
+                    { name: 'titulo', title: 'Título del Área', type: 'string' },
+                    { name: 'slug', title: 'URL Amigable', type: 'slug', options: { source: 'titulo' } },
+                    { 
+                        name: 'listaServicios', 
+                        title: 'Seleccionar Servicios de esta Área', 
+                        type: 'array', 
+                        of: [
+                            {
+                                type: 'reference',
+                                to: [{ type: 'servicioProyecto' }]
+                            }
+                        ] 
+                    },
+                    { name: 'orden', title: 'Orden de Aparición', type: 'number' }
+                ]
+            },
+            {
+                name: 'gridImagenes',
+                title: 'Galería en Cuadrícula',
+                type: 'object',
+                fields: [
+                    {
+                        name: 'imagenes',
+                        title: 'Imágenes',
+                        type: 'array',
+                        of: [{ type: 'cloudinary.asset' }],
+                        options: { layout: 'grid' }
+                    }
+                ]
+            },
+            {
+                name: 'bloqueVideo',
+                title: 'Video Embebido',
+                type: 'object',
+                fields: [
+                    { name: 'url', title: 'URL del Video (YouTube/Vimeo)', type: 'url' },
+                    { name: 'titulo', title: 'Título Opcional', type: 'string' }
+                ]
+            },
+            {
+                name: 'bloqueArchivo',
+                title: 'Archivo Descargable (PDF, 3D)',
+                type: 'object',
+                fields: [
+                    { name: 'archivo', title: 'Subir Archivo', type: 'file' },
+                    { name: 'textoBoton', title: 'Texto del Botón', type: 'string', initialValue: 'Descargar Archivo' }
+                ]
+            },
+            {
+                name: 'bloqueLinks',
+                title: 'Botones y Recursos Externos',
+                type: 'object',
+                fields: [
+                    {
+                        name: 'links',
+                        title: 'Enlaces',
+                        type: 'array',
+                        of: [
+                            {
+                                name: 'enlaceItem',
+                                type: 'object',
+                                fields: [
+                                    { name: 'texto', title: 'Texto del Botón', type: 'string' },
+                                    { name: 'url', title: 'URL', type: 'url' }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                name: 'proyecto',
+                title: 'Proyectos',
+                type: 'document',
+                fields: [
+                    { name: 'titulo', title: 'Título del Proyecto', type: 'string' },
+                    { name: 'slug', title: 'URL Amigable', type: 'slug', options: { source: 'titulo' } },
+                    { name: 'categoria', title: 'Categoría', type: 'string' },
+                    {
+                        name: 'contenidoBody',
+                        title: 'Construcción del Caso de Estudio',
+                        type: 'portableTextExtendido'
+                    },
+                    {
+                        name: 'imagen',
+                        title: 'Imagen Principal (Cloudinary)',
+                        type: 'cloudinary.asset'
+                    },
+                    {
+                        name: 'destacado',
+                        title: 'Destacar en Inicio',
+                        type: 'boolean',
+                        initialValue: false
+                    },
+                    {
+                        name: 'areas',
+                        title: 'Áreas de Diseño',
+                        type: 'array',
+                        of: [{ type: 'string' }],
+                        options: {
+                            list: [
+                                { title: 'Diseño Industrial', value: 'Diseño Industrial' },
+                                { title: 'Diseño UX/UI', value: 'Diseño UX/UI' },
+                                { title: 'Diseño Web/App', value: 'Diseño Web/App' }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'etiquetas',
+                        title: 'Etiquetas Libres',
+                        type: 'array',
+                        of: [{ type: 'string' }],
+                        options: { layout: 'tags' }
+                    }
+                ],
+            },
+        ],
+    },
+});
