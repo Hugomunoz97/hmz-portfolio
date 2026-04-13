@@ -1,8 +1,38 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Contact() {
+  const [status, setStatus] = useState("idle");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("submitting");
+    const formData = new FormData(e.target);
+    
+    try {
+      const response = await fetch("https://formspree.io/f/xbdqjaga", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+      
+      if (response.ok) {
+        setStatus("success");
+        e.target.reset();
+      } else {
+        setStatus("idle");
+        alert("Ocurrió un error al enviar el mensaje. Por favor, intenta de nuevo.");
+      }
+    } catch (error) {
+      setStatus("idle");
+      alert("Ocurrió un error de red al intentar conectar.");
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen selection:bg-[#FFE500] selection:text-neutral-950 w-full mb-16">
 
@@ -38,7 +68,7 @@ export default function Contact() {
               <div className="grid grid-cols-2 gap-4">
                 {[
                   { name: "LinkedIn", href: "#" },
-                  { name: "Behance / Portafolio", href: "#" },
+                  { name: "Behance", href: "#" },
                   { name: "Upwork", href: "#" },
                   { name: "Workana", href: "#" }
                 ].map((link, i) => (
@@ -67,13 +97,14 @@ export default function Contact() {
               {/* Leve brillo superior en la tarjeta de contacto */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-[#FFE500]/50 to-transparent opacity-50" />
 
-              <form className="flex flex-col gap-6" onSubmit={(e) => { e.preventDefault(); alert("Formulario de prueba - Funcionalidad en construcción."); }}>
+              <form action="https://formspree.io/f/xbdqjaga" method="POST" className="flex flex-col gap-6" onSubmit={handleSubmit}>
 
                 <div className="flex flex-col gap-2 relative">
                   <label htmlFor="nombre" className="text-sm font-medium text-white/70 ml-1">Nombre</label>
                   <input
                     type="text"
                     id="nombre"
+                    name="nombre"
                     placeholder="Tu nombre completo"
                     className="bg-neutral-900 border border-white/5 rounded-xl px-5 py-4 text-white placeholder-white/20 outline-none focus:border-[#FFE500] transition-colors"
                     required
@@ -85,6 +116,7 @@ export default function Contact() {
                   <input
                     type="email"
                     id="email"
+                    name="email"
                     placeholder="tucorreo@ejemplo.com"
                     className="bg-neutral-900 border border-white/5 rounded-xl px-5 py-4 text-white placeholder-white/20 outline-none focus:border-[#FFE500] transition-colors"
                     required
@@ -95,6 +127,7 @@ export default function Contact() {
                   <label htmlFor="mensaje" className="text-sm font-medium text-white/70 ml-1">Mensaje</label>
                   <textarea
                     id="mensaje"
+                    name="mensaje"
                     rows={5}
                     placeholder="Cuéntame sobre tu proyecto..."
                     className="bg-neutral-900 border border-white/5 rounded-xl px-5 py-4 text-white placeholder-white/20 outline-none focus:border-[#FFE500] transition-colors resize-none"
@@ -104,10 +137,17 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  className="mt-6 w-full bg-[#FFE500] text-neutral-950 font-bold text-lg py-4 rounded-xl hover:brightness-110 transition-all shadow-[0_0_15px_rgba(255,229,0,0.15)] hover:shadow-[0_0_25px_rgba(255,229,0,0.35)] active:scale-[0.98]"
+                  disabled={status === "submitting"}
+                  className="mt-6 w-full bg-[#FFE500] text-neutral-950 font-bold text-lg py-4 rounded-xl hover:brightness-110 transition-all shadow-[0_0_15px_rgba(255,229,0,0.15)] hover:shadow-[0_0_25px_rgba(255,229,0,0.35)] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Enviar Mensaje
+                  {status === "submitting" ? "Enviando..." : "Enviar Mensaje"}
                 </button>
+                
+                {status === "success" && (
+                  <p className="mt-2 text-center text-[#FFE500] font-medium text-sm">
+                    ¡Gracias! Te responderé pronto.
+                  </p>
+                )}
 
               </form>
             </div>
