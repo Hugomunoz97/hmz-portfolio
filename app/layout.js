@@ -11,6 +11,9 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata = {
   title: "HMZ - Diseño Integral de Producto",
   description: "Portfolio de diseño UX/UI e Industrial.",
+  icons: {
+    icon: "/Logotipo.png",
+  },
 };
 
 export default function RootLayout({ children }) {

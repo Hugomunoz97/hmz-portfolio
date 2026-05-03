@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,8 +10,15 @@ export default function Navbar() {
   return (
     <>
       <header className={`fixed top-0 w-full z-[60] py-4 px-6 md:px-12 flex justify-between items-center transition-colors duration-300 ${isOpen ? 'bg-transparent border-transparent' : 'backdrop-blur-md bg-neutral-950/70 border-b border-white/5'}`}>
-        <Link href="/" className="font-bold text-xl tracking-tighter hover:text-[#FFE500] transition-colors relative z-[60]">
-          HMZ
+        <Link href="/" className="relative z-[60] flex items-center">
+          <Image 
+            src="/Logotipo.sfondo.svg" 
+            alt="HMZ Logo" 
+            width={90} 
+            height={33} 
+            priority
+            className="h-8 w-auto hover:brightness-110 transition-all"
+          />
         </Link>
 
         {/* Menu Desktop */}

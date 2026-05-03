@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -8,8 +9,14 @@ export default function Footer() {
       
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-10 relative z-10">
         <div className="flex flex-col gap-4">
-          <Link href="/" className="font-black text-4xl tracking-tighter hover:text-[#FFE500] transition-colors">
-            HMZ.
+          <Link href="/" className="flex items-center">
+            <Image 
+              src="/Logotipo.sfondo.svg" 
+              alt="HMZ Logo" 
+              width={120} 
+              height={44} 
+              className="h-10 w-auto hover:brightness-110 transition-all"
+            />
           </Link>
           <p className="text-white/50 max-w-sm text-sm font-light leading-relaxed">
             Diseño integral de producto. Combinando estrategia, funcionalidad y estética para crear experiencias significativas.
